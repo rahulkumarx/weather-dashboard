@@ -1,6 +1,13 @@
 import { bootstrapApplication } from '@angular/platform-browser';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { AppComponent } from './app/app';
+import { provideZonelessChangeDetection } from '@angular/core';
 import { appConfig } from './app/app.config';
-import { App } from './app/app';
 
-bootstrapApplication(App, appConfig)
-  .catch((err) => console.error(err));
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideHttpClient(withInterceptorsFromDi()),
+    provideZonelessChangeDetection(),
+    ...appConfig.providers,
+  ],
+}).catch((err) => console.error(err));
